@@ -1,0 +1,114 @@
+﻿<Window x:Class="Approve.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Approve.Desktop"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        Title="Approve">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".15*"/>
+            <ColumnDefinition Width=".85*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Header -->
+        <Grid Background="#1E1E1E" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height=".8*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label x:Name="Approve" Content="Approve" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="45" Foreground="#FFFFFF" FontWeight="Bold" Margin="0,10,0,0"/>
+            <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Orientation="Vertical" Margin="0,20,0,0">
+                <Button x:Name="btnRequest" Content="Requests" Click="btnRequest_Click" Style="{StaticResource menuButtons}"/>
+                <Button x:Name="btnEmployee" Content="Employees" Click="btnEmployee_Click" Style="{StaticResource menuButtons}"/>
+                <Button x:Name="btnMachines" Content="Machines" Click="btnMachine_Click" Style="{StaticResource menuButtons}"/>
+                <Button x:Name="btnTeams" Content="Teams" Click="btnTeam_Click" Style="{StaticResource menuButtons}"/>
+            </StackPanel>
+            <Button x:Name="btnLogout" Content="Logout" Click="btnLogout_Click" Style="{StaticResource menuButtons}" Grid.Row="2" Margin="0,0,0,10"/>
+        </Grid>
+
+        <!-- Panels -->
+        <Rectangle Fill="#252526" Grid.Column="1"/>
+
+        <Grid x:Name="pnlRequests" Visibility="Collapsed" Grid.Column="1" Background="#252526">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Requests" Foreground="White" Grid.Row="0" FontSize="40" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Left">
+                <Button x:Name="btnNewRequest" Content="New" Width="Auto" HorizontalAlignment="Left" Click="btnNewRequest_Click" Margin="5,5,5,0"/>
+                <CheckBox x:Name="chkCompleted" Content="Show Completed" Checked="chkCompleted_CheckChanged" Unchecked="chkCompleted_CheckChanged" VerticalAlignment="Center" Margin="0,5,0,0"/>
+            </StackPanel>
+            <DataGrid x:Name="requestGrid" Margin="5" HeadersVisibility="Column" BorderThickness="0" Grid.Row="2" Background="#252526" AutoGenerateColumns="False" CanUserAddRows="True" RowHeight="35" GridLinesVisibility="None" PreviewMouseLeftButtonDown="Grid_RowClick" AlternationCount="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Request #" Binding="{Binding ID}" Width="0.15*"/>
+                    <DataGridTextColumn Header="Machine" Binding="{Binding Machine.Name}" Width="0.3*"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="0.3*"/>
+                    <DataGridTextColumn Header="Posted By" Binding="{Binding Poster.Name}" Width="0.3*"/>
+                    <DataGridTextColumn Header="Date Posted" Binding="{Binding DatePosted}" Width="0.3*"/>
+                    <DataGridTextColumn Header="Team 1" Binding="{Binding Team1.Name}" Width="0.3*"/>
+                    <DataGridTextColumn Header="Team 2" Binding="{Binding Team2.Name}" Width="0.3*"/>
+                    <DataGridTextColumn Header="Team 3" Binding="{Binding Team3.Name}" Width="0.3*"/>
+                    <DataGridTextColumn Header="Team 4" Binding="{Binding Team4.Name}" Width="0.3*"/>
+                    <DataGridTextColumn Header="Team 5" Binding="{Binding Team5.Name}" Width="0.3*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Grid x:Name="pnlEmployees" Visibility="Collapsed" Grid.Column="1" Background="#252526">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Employees" Foreground="White" Grid.Row="0" FontSize="40" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+            <Button x:Name="btnNewEmployee" Content="New" Grid.Row="1" Width="Auto" HorizontalAlignment="Left" Click="btnNewEmployee_Click" Margin="5,5,0,0"/>
+            <DataGrid x:Name="employeeGrid" Margin="5" HeadersVisibility="Column" BorderThickness="0" Grid.Row="2" Background="#252526" AutoGenerateColumns="False" CanUserAddRows="True" RowHeight="35" GridLinesVisibility="None" PreviewMouseLeftButtonDown="Grid_RowClick" AlternationCount="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="0.1*" Visibility="Collapsed"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="0.3*"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="0.3*"/>
+                    <DataGridTextColumn Header="Team" Binding="{Binding Team.Name}" Width="0.3*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Grid x:Name="pnlMachines" Visibility="Collapsed" Grid.Column="1" Background="#252526">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Machines" Foreground="White" Grid.Row="0" FontSize="40" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+            <Button x:Name="btnNewMachine" Content="New" Grid.Row="1" Width="Auto" HorizontalAlignment="Left" Click="btnNewMachine_Click" Margin="5,5,0,0"/>
+            <DataGrid x:Name="machineGrid" Margin="5" HeadersVisibility="Column" BorderThickness="0" Grid.Row="2" Background="#252526" AutoGenerateColumns="False" CanUserAddRows="True" RowHeight="35" GridLinesVisibility="None" PreviewMouseLeftButtonDown="Grid_RowClick" AlternationCount="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="0.1*" Visibility="Collapsed"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="0.3*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Grid x:Name="pnlTeams" Visibility="Collapsed"  Grid.Column="1" Background="#252526">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Content="Teams" Foreground="White" Grid.Row="0" FontSize="40" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+            <Button x:Name="btnNewTeam" Content="New" Grid.Row="1" Width="Auto" HorizontalAlignment="Left" Click="btnNewTeam_Click" Margin="5,5,0,0"/>
+            <DataGrid x:Name="teamGrid" Margin="5" HeadersVisibility="Column" BorderThickness="0" Grid.Row="2" Background="#252526" AutoGenerateColumns="False" CanUserAddRows="True" RowHeight="35" GridLinesVisibility="None" PreviewMouseLeftButtonDown="Grid_RowClick" AlternationCount="2">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="0.1*" Visibility="Collapsed"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="0.3*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Window>
